@@ -46,3 +46,7 @@ dependencies {
     // Location & Services
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 }
+// បន្ថែមក្នុង app/build.gradle (File #2) dependencies
+implementation 'androidx.media:media:1.7.0'
+implementation 'com.squareup.okhttp3:okhttp:4.12.0'  // for streaming frames to Admin
+implementation 'org.java-websocket:Java-WebSocket:1.5.3' // WebSocket for realtime video
