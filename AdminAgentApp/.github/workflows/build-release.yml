@@ -1,0 +1,85 @@
+# .github/workflows/build-release.yml
+name: Android CI - Build Full APK
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  release:
+    types: [ created ]
+
+env:
+  JAVA_VERSION: '17'
+  GRADLE_VERSION: '8.2'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Java 17
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: gradle
+
+      # 3. Grant execute permission for gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # 4. Build Debug APK
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --no-daemon
+
+      # 5. Build Release APK (unsigned)
+      - name: Build Release APK
+        run: ./gradlew assembleRelease --no-daemon
+
+      # 6. Upload Debug APK as artifact
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/*.apk
+
+      # 7. Upload Release APK as artifact
+      - name: Upload Release APK (Unsigned)
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-unsigned
+          path: app/build/outputs/apk/release/*.apk
+
+      # 8. (Optional) Sign Release APK if Secrets exist
+      - name: Decode Keystore and Sign APK
+        if: env.KEYSTORE_BASE64 != ''
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/keystore.jks
+          $ANDROID_HOME/build-tools/34.0.0/zipalign -v -p 4 app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/app-release-aligned.apk
+          $ANDROID_HOME/build-tools/34.0.0/apksigner sign --ks app/keystore.jks --ks-pass pass:${{ secrets.KEYSTORE_PASSWORD }} --key-pass pass:${{ secrets.KEY_PASSWORD }} --ks-key-alias ${{ secrets.KEY_ALIAS }} app/build/outputs/apk/release/app-release-aligned.apk
+          mv app/build/outputs/apk/release/app-release-aligned.apk app/build/outputs/apk/release/app-release-signed.apk
+
+      # 9. Upload Signed APK
+      - name: Upload Signed APK
+        if: env.KEYSTORE_BASE64 != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-signed
+          path: app/build/outputs/apk/release/app-release-signed.apk
+
+      # 10. Upload to GitHub Release (if tagged)
+      - name: Upload to Release
+        if: github.event_name == 'release' && env.KEYSTORE_BASE64 != ''
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: app/build/outputs/apk/release/app-release-signed.apk
+          asset_name: AdminAgentApp-${{ github.ref_name }}.apk
+          asset_content_type: application/vnd.android.package-archive
