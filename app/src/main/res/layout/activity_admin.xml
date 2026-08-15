@@ -1,0 +1,138 @@
+<!-- res/layout/activity_admin.xml -->
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8B0000"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADMIN PANEL"
+            android:textColor="#FF4444"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp" />
+
+        <!-- ===== CONTROL SECTION ===== -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#CC0000"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="8dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView android:text="⚡ CONTROL" android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold" />
+
+                <!-- Flashlight -->
+                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                    <TextView android:text="Flashlight" android:textColor="#FFFFFF" android:layout_weight="1" />
+                    <Button android:id="@+id/btnFlash" android:text="TOGGLE" android:backgroundTint="#FF5722" />
+                </LinearLayout>
+
+                <!-- Play Video -->
+                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                    <EditText android:id="@+id/etVideoUrl" android:hint="YouTube/MP4 URL" android:textColorHint="#DDDDDD" android:textColor="#FFFFFF" android:layout_weight="1" android:background="#55000000" android:padding="8dp" />
+                    <Button android:id="@+id/btnPlayVideo" android:text="PLAY" android:backgroundTint="#FF5722" />
+                </LinearLayout>
+
+                <!-- Set Wallpaper -->
+                <Button android:id="@+id/btnWallpaper" android:text="📷 SET WALLPAPER (Upload)" android:backgroundTint="#FF5722" android:layout_marginTop="8dp" />
+
+                <!-- Lock Device -->
+                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                    <EditText android:id="@+id/etLockMinutes" android:hint="Minutes" android:textColorHint="#DDDDDD" android:textColor="#FFFFFF" android:inputType="number" android:layout_weight="1" android:background="#55000000" android:padding="8dp" />
+                    <Button android:id="@+id/btnLock" android:text="LOCK V1" android:backgroundTint="#FF5722" />
+                </LinearLayout>
+
+                <!-- Lock V2 -->
+                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                    <EditText android:id="@+id/etLockV2Minutes" android:hint="Minutes" android:textColorHint="#DDDDDD" android:textColor="#FFFFFF" android:inputType="number" android:layout_weight="1" android:background="#55000000" android:padding="8dp" />
+                    <EditText android:id="@+id/etAlertMsg" android:hint="Alert Msg" android:textColorHint="#DDDDDD" android:textColor="#FFFFFF" android:layout_weight="1" android:background="#55000000" android:padding="8dp" />
+                    <Button android:id="@+id/btnLockV2" android:text="LOCK V2" android:backgroundTint="#D32F2F" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ===== LIVE SECTION ===== -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#CC0000"
+            app:cardCornerRadius="12dp"
+            android:layout_marginBottom="16dp">
+            <LinearLayout android:orientation="vertical" android:padding="16dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView android:text="📡 LIVE" android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold" />
+                <Button android:id="@+id/btnLiveScreen" android:text="VIEW LIVE SCREEN" android:backgroundTint="#FF5722" android:layout_marginTop="8dp" />
+                <Button android:id="@+id/btnLiveCamera" android:text="VIEW CAMERA (Front/Back)" android:backgroundTint="#FF5722" android:layout_marginTop="8dp" />
+                <Switch android:id="@+id/swHideApp" android:text="Hide Agent App" android:textColor="#FFFFFF" android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ===== DEVICE INFO ===== -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#CC0000"
+            app:cardCornerRadius="12dp"
+            android:layout_marginBottom="16dp">
+            <LinearLayout android:orientation="vertical" android:padding="16dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView android:text="🖥️ DEVICE INFO" android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold" />
+                <TextView android:id="@+id/tvDeviceModel" android:text="Model: ..." android:textColor="#FFFFFF" />
+                <TextView android:id="@+id/tvIP" android:text="IP: ..." android:textColor="#FFFFFF" />
+                <TextView android:id="@+id/tvLocation" android:text="Location: ..." android:textColor="#FFFFFF" />
+                <Button android:id="@+id/btnRefreshInfo" android:text="REFRESH" android:backgroundTint="#FF5722" android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ===== TOGGLES ===== -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#CC0000"
+            app:cardCornerRadius="12dp"
+            android:layout_marginBottom="16dp">
+            <LinearLayout android:orientation="vertical" android:padding="16dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView android:text="🔘 TOGGLES" android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold" />
+                <Switch android:id="@+id/swWifi" android:text="WiFi" android:textColor="#FFFFFF" />
+                <Switch android:id="@+id/swData" android:text="Internet Data" android:textColor="#FFFFFF" />
+                <Switch android:id="@+id/swBluetooth" android:text="Bluetooth" android:textColor="#FFFFFF" />
+                <Switch android:id="@+id/swLocation" android:text="GPS Location" android:textColor="#FFFFFF" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ===== PHONE CALL & MIC ===== -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#CC0000"
+            app:cardCornerRadius="12dp"
+            android:layout_marginBottom="16dp">
+            <LinearLayout android:orientation="vertical" android:padding="16dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView android:text="📞 PHONE CONTROL" android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold" />
+                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                    <EditText android:id="@+id/etPhoneNumber" android:hint="Enter Number" android:textColorHint="#DDDDDD" android:textColor="#FFFFFF" android:inputType="phone" android:layout_weight="1" android:background="#55000000" android:padding="8dp" />
+                    <Button android:id="@+id/btnCall" android:text="CALL" android:backgroundTint="#FF5722" />
+                </LinearLayout>
+                <Button android:id="@+id/btnMicOn" android:text="🎤 MIC ON (Speak to Agent's Call)" android:backgroundTint="#D32F2F" android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>
