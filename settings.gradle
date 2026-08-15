@@ -1,4 +1,4 @@
-// File #12: /settings.gradle
+// File: settings.gradle (កែតម្រូវ)
 pluginManagement {
     repositories {
         google()
@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)  // កែពី FAIL_ON_PROJECT_REPOS
     repositories {
         google()
         mavenCentral()
