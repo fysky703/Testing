@@ -1,0 +1,2 @@
+# រត់ពាក្យបញ្ជានេះក្នុង Root Project (AdminAgentApp/)
+curl -L https://repo1.maven.org/maven2/org/gradle/gradle-wrapper/8.2/gradle-wrapper-8.2.jar -o gradle/wrapper/gradle-wrapper.jar
